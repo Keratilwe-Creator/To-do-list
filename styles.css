@@ -1,0 +1,248 @@
+/* General Styles */
+body {
+    font-family: 'Roboto', sans-serif;
+    background-color: #FFF9E1; /* Light yellow background */
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    color: #333;
+}
+
+.container {
+    background-color: #ffffff; /* White container background */
+    padding: 40px;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 500px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+h1 {
+    margin-bottom: 20px;
+    font-size: 2.5em;
+    color: #FFEB3B; /* Bright yellow color */
+    font-weight: bold;
+    letter-spacing: 2px;
+}
+
+/* Task Input Section */
+.task-input {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 20px;
+    width: 100%;
+}
+
+.task-input input {
+    padding: 15px;
+    font-size: 18px;
+    border-radius: 25px;
+    border: 1px solid #ddd;
+    background-color: #f7f7f7;
+    margin-bottom: 20px;
+    width: 100%;
+    box-sizing: border-box;
+    transition: all 0.3s ease;
+}
+
+.task-input input:focus {
+    outline: none;
+    box-shadow: 0 0 8px rgba(255, 187, 51, 0.5); /* Soft bright yellow glow */
+}
+
+.task-input button {
+    padding: 20px;
+    font-size: 20px;
+    background-color: #FFEB3B; /* Bright yellow button background */
+    color: white;
+    border: none;
+    border-radius: 50%; /* Circular button */
+    width: 80px; /* Increased size for the button */
+    height: 80px; /* Increased size for the button */
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin: 0 auto;
+}
+
+.task-input button:hover {
+    background-color: #fbff00; /* Darker yellow on hover */
+}
+
+/* Custom Date and Time Picker */
+.datetime-picker {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+}
+
+.datetime-picker input {
+    padding: 10px;
+    font-size: 16px;
+    border-radius: 20px; /* Rounded input fields */
+    border: 1px solid #ddd;
+    background-color: #FFF;
+    width: 48%; /* Split the space evenly */
+    transition: background-color 0.3s ease;
+}
+
+/* Remove focus effect and shadow */
+.datetime-picker input:focus {
+    outline: none;
+    box-shadow: none; /* Remove the shadow */
+}
+
+/* Styling for other elements */
+input:focus {
+    border-color: #FFEB3B; /* Light yellow focus border */
+}
+
+/* Task List Section */
+ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    width: 100%;
+}
+
+li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #ffffff;
+    padding: 18px 25px;
+    margin: 10px 0;
+    border-radius: 15px;
+    font-size: 18px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+li:hover {
+    transform: scale(1.02); /* Slight scaling effect on hover */
+}
+
+/* General Modal Styles for Deleting Confirmation */
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.modal-content {
+    background-color: white;
+    padding: 30px;
+    border-radius: 15px;
+    text-align: center;
+    width: 300px;
+    box-sizing: border-box; /* Ensures padding doesn't overflow */
+}
+
+.modal-buttons {
+    display: flex;
+    justify-content: space-around;
+}
+
+button.confirm-btn, button.cancel-btn {
+    padding: 12px 20px; /* Slightly adjusted padding for consistency */
+    font-size: 16px;
+    border-radius: 25px;
+    border: none;
+    cursor: pointer;
+    width: 80px;
+    transition: background-color 0.3s ease;
+}
+
+button.confirm-btn {
+    background-color: #4CAF50; /* Green for Yes */
+    color: white;
+}
+
+button.cancel-btn {
+    background-color: #F44336; /* Red for No */
+    color: white;
+}
+
+button.confirm-btn:hover,
+button.cancel-btn:hover {
+    background-color: #388E3C; /* Darker green for Yes */
+    opacity: 0.9; /* Slight hover effect */
+}
+
+button.delete-btn {
+    background-color: #F44336;
+    color: white;
+    border: none;
+    padding: 15px;
+    cursor: pointer;
+    border-radius: 50%; /* Circular delete button */
+    transition: background-color 0.3s ease;
+    font-size: 25px;
+    margin-left: 10px;
+}
+
+button.delete-btn:hover {
+    background-color: #E53935;
+}
+
+/* Modal Styles for Edit Task */
+.modal-content {
+    background-color: white;
+    padding: 30px;
+    border-radius: 10px;
+    text-align: center;
+    width: 300px;
+    box-sizing: border-box; /* Ensures padding doesn't overflow */
+}
+
+.modal-buttons {
+    display: flex;
+    justify-content: space-around;
+}
+
+button.confirm-btn {
+    background-color: #4CAF50; /* Green for confirmation */
+    color: white;
+    padding: 12px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    border: none;
+}
+
+button.cancel-btn {
+    background-color: #F44336; /* Red for cancellation */
+    color: white;
+    padding: 12px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    border: none;
+}
+
+button.confirm-btn:hover,
+button.cancel-btn:hover {
+    opacity: 0.8; /* Hover opacity effect */
+}
+
+
+
+
+
+
+
+
+
