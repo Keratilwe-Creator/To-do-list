@@ -8,4 +8,4 @@ Responsive design:Fully responsive, ensuring proper display on mobile and deskto
 To run this app locally:
 1. Clone this repository to your local machine:
    ```bash
-   git clone 
+   git clone https://github.com/Keratilwe-Creator/To-do-list.git
