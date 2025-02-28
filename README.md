@@ -9,3 +9,13 @@ To run this app locally:
 1. Clone this repository to your local machine:
    ```bash
    git clone https://github.com/Keratilwe-Creator/To-do-list.git
+
+How to Use
+Add a task:
+Enter the task name in the input field and click the "Add Task" button (styled in yellow).
+Edit a task:
+Click the "Edit" button next to a task. Modify the task name and save the changes.
+Delete a task:
+Click the "Delete" button next to a task. A confirmation modal will appear asking if you are sure you want to delete the task. You can either confirm or cancel.
+Mark a task as completed:
+Click the checkbox next to a task to mark it as completed. The task will be struck through and grayed out.
