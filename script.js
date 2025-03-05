@@ -84,8 +84,6 @@ document.getElementById('addButton').addEventListener('click', () => {
     addTask();
 });
 
-// Load tasks when page is loaded
-window.onload = loadTasks;
 
 
 
