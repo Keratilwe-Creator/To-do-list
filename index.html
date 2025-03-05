@@ -13,7 +13,7 @@
         <div class="task-input">
             <input type="text" id="task-name" placeholder="Enter task name">
             <input type="date" id="due-date">
-            <button id="addButton">Add Task</button>
+            <button onclick="addTask()">Add Task</button>
         </div>
 
         <ul id="task-list"></ul>
@@ -29,6 +29,7 @@
         </div>
     </div>
 
+
     <div id="edit-modal" class="modal">
         <div class="modal-content">
             <h3>Edit Task</h3>
@@ -41,7 +42,6 @@
         </div>
     </div>
 
-    <!-- Add your script at the bottom of the body to ensure it loads after the DOM -->
     <script src="script.js"></script>
 </body>
 </html>

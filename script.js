@@ -1,91 +1,116 @@
-// Define the API URL for backend communication
-const apiUrl = process.env.API_URL || 'http://localhost:3000/todos';  // Default to localhost if not provided
+let tasks = [];
+let taskToDelete = null;
 
-// Function to display tasks
-function displayTasks(tasks) {
+function addTask() {
+    const taskName = document.getElementById('task-name').value;
+    const dueDate = document.getElementById('due-date').value;
+
+    if (taskName && dueDate) {
+        const task = {
+            id: Date.now(),
+            name: taskName,
+            dueDate: dueDate,
+            completed: false
+        };
+
+        tasks.push(task);
+        saveTasksToLocalStorage();
+        renderTasks();
+        clearInputFields();
+    } else {
+        alert("Please fill in all fields.");
+    }
+}
+
+function saveTasksToLocalStorage() {
+    localStorage.setItem('tasks', JSON.stringify(tasks));
+}
+
+function loadTasksFromLocalStorage() {
+    const storedTasks = localStorage.getItem('tasks');
+    if (storedTasks) {
+        tasks = JSON.parse(storedTasks);
+        renderTasks();
+    }
+}
+
+function renderTasks() {
     const taskList = document.getElementById('task-list');
-    taskList.innerHTML = '';  // Clear current task list
+    taskList.innerHTML = '';
 
     tasks.forEach(task => {
-        const li = document.createElement('li');
-        li.textContent = task.task;
-
-        // Add a delete button to each task
-        const deleteBtn = document.createElement('button');
-        deleteBtn.textContent = 'Delete';
-        deleteBtn.onclick = () => deleteTask(task._id);  // MongoDB uses _id instead of id
-
-        li.appendChild(deleteBtn);
-        taskList.appendChild(li);
+        const taskItem = document.createElement('li');
+        taskItem.classList.toggle('completed', task.completed);
+        
+        taskItem.innerHTML = `
+            <input type="checkbox" onclick="toggleCompletion(${task.id})" ${task.completed ? 'checked' : ''}>
+            <span>${task.name} (Due: ${task.dueDate})</span>
+            <button onclick="editTask(${task.id})">Edit</button>
+            <button onclick="showDeleteConfirmation(${task.id})">Delete</button>
+        `;
+        
+        taskList.appendChild(taskItem);
     });
 }
 
-// Function to add a new task
-function addTask() {
-    const taskInput = document.getElementById('task-name');
-    const taskName = taskInput.value.trim();  // Trim spaces to avoid empty tasks
+function toggleCompletion(taskId) {
+    const task = tasks.find(task => task.id === taskId);
+    task.completed = !task.completed;
+    saveTasksToLocalStorage();
+    renderTasks();
+}
 
-    console.log('Task name:', taskName);
 
-    if (!taskName) {
-        alert('Please enter a valid task!');
-        return;  // Do nothing if task input is empty
+function editTask(taskId) {
+    const task = tasks.find(task => task.id === taskId);
+    document.getElementById('edit-task-name').value = task.name;
+    document.getElementById('edit-due-date').value = task.dueDate;
+
+    taskToDelete = taskId;
+    document.getElementById('edit-modal').style.display = 'flex';
+}
+
+
+function saveEdit() {
+    const taskName = document.getElementById('edit-task-name').value;
+    const dueDate = document.getElementById('edit-due-date').value;
+
+    const task = tasks.find(task => task.id === taskToDelete);
+    task.name = taskName;
+    task.dueDate = dueDate;
+
+    saveTasksToLocalStorage();
+    renderTasks();
+    closeModal();
+}
+
+
+function showDeleteConfirmation(taskId) {
+    taskToDelete = taskId;
+    document.getElementById('confirm-modal').style.display = 'flex';
+}
+
+function confirmDelete(confirm) {
+    if (confirm) {
+        tasks = tasks.filter(task => task.id !== taskToDelete);
+        saveTasksToLocalStorage();
+        renderTasks();
     }
-
-    const taskData = {
-        task: taskName,
-    };
-
-    console.log('Task data:', taskData);
-
-    // Send a POST request to add a new task
-    fetch(apiUrl, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(taskData),
-    })
-    .then(response => response.json())
-    .then(data => {
-        console.log('New Task Added:', data);
-        loadTasks();  // Reload the tasks after adding
-    })
-    .catch(error => console.error('Error:', error));
-
-    taskInput.value = '';  // Clear the input field after task is added
+    closeModal();
 }
 
-// Function to load tasks from the backend
-function loadTasks() {
-    fetch(apiUrl)
-        .then(response => response.json())
-        .then(tasks => {
-            displayTasks(tasks);
-        })
-        .catch(error => console.error('Error:', error));
+function closeModal() {
+    document.getElementById('edit-modal').style.display = 'none';
+    document.getElementById('confirm-modal').style.display = 'none';
 }
 
-// Function to delete a task
-function deleteTask(id) {
-    fetch(`${apiUrl}/${id}`, {
-        method: 'DELETE',
-    })
-    .then(response => response.json())
-    .then(() => {
-        loadTasks();  // Reload the tasks after deleting
-    })
-    .catch(error => console.error('Error:', error));
+
+function clearInputFields() {
+    document.getElementById('task-name').value = '';
+    document.getElementById('due-date').value = '';
 }
 
-// Event listener to add task when button is clicked
-document.getElementById('addButton').addEventListener('click', () => {
-    console.log('Add button clicked');
-    addTask();
-});
-
-
-
+loadTasksFromLocalStorage();
 
 
 
